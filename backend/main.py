@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
 
-from backend.algorithm import get_mock_optimization
+from backend.algorithm import optimize_route as run_optimization
 
 
 class OptimizeRequest(BaseModel):
@@ -23,5 +23,8 @@ app.add_middleware(
 
 
 @app.post("/optimize")
-def optimize_route(payload: OptimizeRequest):
-    return get_mock_optimization(payload.from_, payload.to)
+def optimize(payload: OptimizeRequest):
+    result = run_optimization(payload.from_, payload.to)
+    if not result["old_route"] or not result["new_route"]:
+        raise HTTPException(status_code=404, detail="No route found")
+    return result
