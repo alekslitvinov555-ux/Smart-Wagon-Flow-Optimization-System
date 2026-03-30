@@ -1,0 +1,13 @@
+{
+  "stations": ["A", "B", "C", "D"],
+  "connections": [
+    { "from": "A", "to": "C", "time": 60 },
+    { "from": "C", "to": "B", "time": 60 },
+    { "from": "A", "to": "D", "time": 45 },
+    { "from": "D", "to": "B", "time": 50 }
+  ],
+  "congestion": {
+    "C": 20
+  }
+}
+
